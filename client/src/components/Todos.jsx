@@ -12,9 +12,10 @@ const Todos = (props) => {
         if (localStorage.getItem("token")) {
             getTodos()
         } else {
+            props.showAlert("You need to login to view todos", "danger");
             navigate("/login")
         }
-        // eslint-disable-next-line
+        
     }, [])
     const ref = useRef(null)
     const refClose = useRef(null)
