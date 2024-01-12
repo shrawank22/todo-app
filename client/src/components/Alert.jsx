@@ -9,10 +9,9 @@ export default function Alert() {
 
     return (
         <div style={{ height: "50px" }} >
-
-            {alert && <div className={`alert alert-${alert.type} alert-dismissible fade show container my-2`} role="alert">
+            { alert && <div className={`alert alert-${alert.type} alert-dismissible fade show container my-2`} role="alert">
                 <strong>{alert.type} </strong> : {alert.msg}
-            </div>}
+            </div> }
         </div>
     )
 }

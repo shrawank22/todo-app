@@ -39,12 +39,12 @@ const Signup = () => {
         <form className='mt-5' onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
-                <input type="text" className="form-control" value={credentials.name} onChange={onChange} id="name" name="name" aria-describedby="nameHelp" required />
+                <input type="text" className="form-control" value={credentials.name} onChange={onChange} id="name" name="name" required />
             </div>
 
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">Email address</label>
-                <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="emailHelp" required />
+                <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" required />
                 <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
 

@@ -45,7 +45,7 @@ const Login = () => {
         <form className='mt-4' onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label htmlFor="username" className="form-label">Username</label>
-                <input type="text" className="form-control" value={credentials.username} onChange={onChange} id="username" name="username" aria-describedby="usernameHelp" />
+                <input type="text" className="form-control" value={credentials.username} onChange={onChange} id="username" name="username" />
             </div>
             <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
