@@ -1,11 +1,26 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import todoContext from '../context/todos/todoContext';
+import { useContext } from 'react';
 
 const Navbar = () => {
+    const context = useContext(todoContext);
+    const { showAlert } = context;
+    
     let navigateTo = useNavigate();
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigateTo('/login')
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/api/logout", {
+                withCredentials: "true"
+            });
+            // console.log(response);
+            showAlert("success", response.data.message);
+            localStorage.removeItem('token');
+            navigateTo('/login')
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     let location = useLocation();
@@ -28,7 +43,10 @@ const Navbar = () => {
                     {!localStorage.getItem('token') ? <form className='d-flex'>
                         <Link className={`btn btn-light mx-1 ${location.pathname==="/login"? "active": ""}`} to="/login">Login</Link>
                         <Link className={`btn btn-light mx-1 ${location.pathname==="/register" ? "active": ""}`} to="/register">Register</Link>
-                    </form> : <button className='btn btn-warning' onClick={handleLogout}>Logout</button>}
+                    </form> :<div className='d-flex'>
+                        {/* <a className='btn btn-info mx-2'>Signed in as {currentUser} </a> */}
+                        <button className='btn btn-warning' onClick={handleLogout}>Logout</button>
+                    </div>}
                 </div>
             </div>
         </nav>

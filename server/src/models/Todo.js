@@ -2,11 +2,7 @@ const mongoose = require('mongoose')
 
 const {Schema, model} = mongoose;
 
-const notesSchema = new Schema({
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
+const todoSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -19,10 +15,17 @@ const notesSchema = new Schema({
         type: String,
         default: "General"
     },
+    author: {
+		id: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
+		}, 
+		username: String
+	},
     date: {
         type: Date, 
         default: Date.now
     }
 });
 
-module.exports = model("Notes", notesSchema)
+module.exports = model("Todo", todoSchema)

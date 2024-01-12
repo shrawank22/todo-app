@@ -6,13 +6,15 @@ import { useNavigate } from 'react-router';
 
 const Todos = (props) => {
     const context = useContext(todoContext);
-    const { todos, getTodos, editTodo } = context;
+
+    const { todos, getTodos, editTodo, showAlert } = context;
+
     let navigate = useNavigate();
     useEffect(() => {
         if (localStorage.getItem("token")) {
             getTodos()
         } else {
-            props.showAlert("You need to login to view todos", "danger");
+            showAlert("danger", "You need to login to view todos");
             navigate("/login")
         }
         
@@ -34,7 +36,7 @@ const Todos = (props) => {
     const handleClick = (e) => {
         editTodo(todo.id, todo.etitle, todo.edescription, todo.etag)
         refClose.current.click();
-        props.showAlert("Updated Successfully", "success");
+        showAlert("success", "Updated Successfully", );
     }
 
     const onChange = (e) => {
@@ -43,7 +45,7 @@ const Todos = (props) => {
 
     return (
         <>
-            <AddTodo showAlert={props.showAlert} />
+            <AddTodo />
             <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Launch demo modal
             </button>
@@ -85,7 +87,7 @@ const Todos = (props) => {
                     {todos.length === 0 && 'No todos to display'}
                 </div>
                 {todos.map((todo) => {
-                    return <TodoItem key={todo._id} updateTodo={updateTodo} showTodo={showTodo} todo={todo} showAlert={props.showAlert} />
+                    return <TodoItem key={todo._id} updateTodo={updateTodo} showTodo={showTodo} todo={todo} />
                 })}
             </div>
         </>

@@ -4,22 +4,35 @@ import axios from 'axios'
 
 const TodoState = ({ children }) => {
     const host = "http://localhost:8080"
-    const todosInitial = []
-    const [todos, setTodos] = useState(todosInitial)
-    // const state = { "name": "Shrawan", "age": 23}  
+ 
+    const [todos, setTodos] = useState([])
+
+    const [alert, setAlert] = useState(null);
+
+    function showAlert(type, message) {
+        setAlert({
+            type: type,
+            msg: message
+        });
+        setTimeout(() => {
+            setAlert(null);
+        }, 1500);
+    };
+
 
     // Get all Todos
     const getTodos = async () => {
         // API Call 
         try {
             const response = await axios.get(`${host}/api/todos/`, {
+                withCredentials: "true",
                 headers: {
-                    'Content-Type': 'application/json',
-                    "auth-token": localStorage.getItem('token')
+                    'Content-Type': 'application/json'
                 }
             });
-            // console.log(response.data)
-            setTodos(response.data)
+            if (response.data) {
+                setTodos(response.data)   
+            }
         } catch (err) {
             console.error(err);
         }
@@ -30,9 +43,9 @@ const TodoState = ({ children }) => {
         try {
             // API Call 
             const response = await axios.post(`${host}/api/todos/`, { title, description, tag }, {
+                withCredentials: "true",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'auth-token': localStorage.getItem('token')
+                    'Content-Type': 'application/json'
                 }
             });
 
@@ -49,9 +62,9 @@ const TodoState = ({ children }) => {
         try {
             // API Call
             const response = await axios.delete(`${host}/api/todos/${id}`, {
+                withCredentials: "true",
                 headers: {
-                    'Content-Type': 'application/json',
-                    "auth-token": localStorage.getItem('token')
+                    'Content-Type': 'application/json'
                 }
             });
             console.log(response.data)
@@ -67,13 +80,14 @@ const TodoState = ({ children }) => {
         try {
             // API Call 
             const response = await axios.put(`${host}/api/todos/${id}`, {title, description, tag}, {
+                withCredentials: "true",
                 headers: {
                     'Content-Type': 'application/json',
                     "auth-token": localStorage.getItem('token')
                 }
             });
 
-            console.log(response.data)
+            // console.log(response.data)
 
             let newTodos = JSON.parse(JSON.stringify(todos))
             // Logic to edit in client
@@ -94,7 +108,7 @@ const TodoState = ({ children }) => {
     }
 
     return (
-        <TodoContext.Provider value={{ todos, addTodo, deleteTodo, editTodo, getTodos }}>
+        <TodoContext.Provider value={{ todos, addTodo, deleteTodo, editTodo, getTodos, alert, showAlert }}>
             {children}
         </TodoContext.Provider>
     )

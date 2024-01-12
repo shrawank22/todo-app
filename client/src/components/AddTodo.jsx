@@ -1,9 +1,9 @@
 import React, {useContext, useState} from 'react'
 import todoContext from "../context/todos/todoContext"
 
-const AddTodo = (props) => {
+const AddTodo = () => {
     const context = useContext(todoContext);
-    const {addTodo} = context;
+    const {addTodo, showAlert} = context;
 
     const [todo, setTodo] = useState({title: "", description: "", tag: ""})
 
@@ -11,7 +11,7 @@ const AddTodo = (props) => {
         e.preventDefault();
         addTodo(todo.title, todo.description, todo.tag);
         setTodo({title: "", description: "", tag: ""});
-        props.showAlert("Added Successfully","success");
+        showAlert("success", "Added Successfully");
     }
 
     const onChange = (e)=>{

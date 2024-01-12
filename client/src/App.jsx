@@ -10,28 +10,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import TodoState from './context/todos/TodoState';
 
 const App = () => {
-  const [alert, setAlert] = useState(null);
-
-  function showAlert(message, type) {
-    setAlert({
-      msg: message,
-      type: type
-    });
-    setTimeout(() => {
-      setAlert(null);
-    }, 1500);
-  };
   return (
     <TodoState>
       <Router >
         <Navbar />
-        <Alert alert={alert} />
+        <Alert />
         <div className="container">
           <Routes>
-            <Route exact path="/" element={<Home showAlert={showAlert} />} />
+            <Route exact path="/" element={<Home />} />
             <Route exact path="/about" element={<About />} />
-            <Route exact path="/login" element={<Login showAlert={showAlert} />} />
-            <Route exact path="/register" element={<Signup showAlert={showAlert} />} />
+            <Route exact path="/login" element={<Login />} />
+            <Route exact path="/register" element={<Signup />} />
           </Routes>
         </div>
       </Router >

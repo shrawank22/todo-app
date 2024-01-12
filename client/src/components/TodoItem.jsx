@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import todoContext from "../context/todos/todoContext"
 
 
 const TodoItem = (props) => {
     const context = useContext(todoContext);
-    const { deleteTodo } = context;
+    const { deleteTodo, showAlert } = context;
+    
     const { todo, updateTodo, showTodo } = props;
 
     return (
@@ -21,7 +22,7 @@ const TodoItem = (props) => {
                 <div className="card-body">
                     <div className="d-flex align-items-center">
                         <h5 className="card-title">{todo.title}</h5>
-                        <i className="far fa-trash-alt mx-2 text-danger" onClick={() => { deleteTodo(todo._id); props.showAlert("Deleted Successfully", "success"); }}></i>
+                        <i className="far fa-trash-alt mx-2 text-danger" onClick={() => { deleteTodo(todo._id); showAlert("success", "Deleted Successfully"); }}></i>
                         <i className="far fa-edit mx-2 text-warning" onClick={() => { updateTodo(todo) }}></i>
                     </div>
                     <p className="card-text">{todo.description.substring(0, 200)}...</p>

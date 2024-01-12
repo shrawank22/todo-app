@@ -1,19 +1,17 @@
-import React from 'react'
-export default function Alert(props) {
-    function capitalize(str) {
-        if(str === "danger") {
-            str = "error";
-        }
-        let new_s = "", s = str.toLowerCase();
-        new_s += s[0].toUpperCase();
-        new_s += s.substr(1);
-        return new_s;
-    }
+import {useContext} from 'react'
+import todoContext from '../context/todos/todoContext';
+
+
+export default function Alert() {
+    const context = useContext(todoContext);
+    const { alert } = context;
+
+
     return (
         <div style={{ height: "50px" }} >
 
-            {props.alert && <div className={`alert alert-${props.alert.type} alert-dismissible fade show container my-2`} role="alert">
-                <strong>{capitalize(props.alert.type)} </strong> : {props.alert.msg}
+            {alert && <div className={`alert alert-${alert.type} alert-dismissible fade show container my-2`} role="alert">
+                <strong>{alert.type} </strong> : {alert.msg}
             </div>}
         </div>
     )

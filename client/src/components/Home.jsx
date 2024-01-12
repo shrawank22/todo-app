@@ -1,8 +1,8 @@
 import Todos from "./Todos"
 
-const Home = (props) => {
+const Home = () => {
   return (
-    <Todos showAlert={props.showAlert} />
+    <Todos />
   )
 }
 

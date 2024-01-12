@@ -1,31 +1,38 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
+import axios from 'axios'
+import todoContext from '../context/todos/todoContext'
 
 
-const Login = (props) => {
-    const [credentials, setCredentials] = useState({ email: "", password: "" })
+const Login = () => {
+    const [credentials, setCredentials] = useState({ username: "", password: "" })
+
+    const context = useContext(todoContext);
+    const {showAlert} = context;
+
     let navigateTo = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/api/auth/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: credentials.email, password: credentials.password })
-        });
-        const json = await response.json()
-        // console.log(json);
-        if (json.success) {
-            // Save the auth token and redirect
-            localStorage.setItem('token', json.authtoken);
-            props.showAlert("Logged in Successfully!", "success");
+        const { username, password } = credentials;
+        try {
+            const response = await axios.post("http://localhost:8080/api/login", { username, password }, {
+                withCredentials: "true",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            // console.log(response)
+
+            localStorage.setItem('token', response.data.authtoken);
+            showAlert("success", "Logged in Successfully!");
             navigateTo("/");
 
-        }
-        else {
-            props.showAlert("Invalid Credentials", "danger");
+
+        } catch (err) {
+            // console.log(err);
+            showAlert("danger", "Invalid Credentials");
         }
     }
 
@@ -37,9 +44,8 @@ const Login = (props) => {
 
         <form className='mt-4' onSubmit={handleSubmit}>
             <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email address</label>
-                <input type="email" className="form-control" value={credentials.email} onChange={onChange} id="email" name="email" aria-describedby="emailHelp" />
-                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                <label htmlFor="username" className="form-label">Username</label>
+                <input type="text" className="form-control" value={credentials.username} onChange={onChange} id="username" name="username" aria-describedby="usernameHelp" />
             </div>
             <div className="mb-3">
                 <label htmlFor="password" className="form-label">Password</label>
