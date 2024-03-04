@@ -8,7 +8,7 @@ const localStrategy = require('passport-local');
 
 const app = express();
 
-//App config
+// App config
 const options = {
     credentials: true,
     origin: "http://localhost:5173",
@@ -24,11 +24,11 @@ app.use(expressSanitizer());
 //DB Models exports
 const User = require('./models/User');
 
-//routes imported
+// routes imported
 const authRoutes = require('./routes/authRoutes');
 const todoRoutes = require('./routes/todoRoutes');
 
-//DB Connection
+// DB Connection
 const connectMongo = require('./connect');
 connectMongo();
 
@@ -66,19 +66,6 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 
-// app.use(require("express-session")({
-// 	secret: "Why should I tell you?",
-// 	resave: false,
-// 	saveUninitialized: false,
-// 	cookie: {
-//         httpOnly: true,
-//         // secure: true,
-//         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-//         maxAge: 1000 * 60 * 60 * 24 * 7
-//     }  
-// }));
-
-
 // Passport config----------
 app.use(passport.initialize());
 app.use(passport.session());
@@ -92,11 +79,11 @@ app.use((req, res, next) => {
     next();
 });
 
-//imported routes use
+// imported routes use
 app.use("/api", authRoutes);
 app.use("/api", todoRoutes)
 
-//app listen config
+// app listen config
 const PORT = process.env.PORT || 8080;
 const IP = process.env.IP || "0.0.0.0";
 app.listen(PORT, IP, () =>

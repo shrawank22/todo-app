@@ -19,7 +19,7 @@ const AddTodo = () => {
     }
     return (
         <div className="container my-3">
-            <h2>Add a Todo</h2>
+            <h2>Add a Project</h2>
             <form className="my-3">
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Title</label>

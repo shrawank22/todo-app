@@ -1,8 +1,9 @@
 import './App.css'
-import { useState } from 'react';
+import { lazy, Suspense } from 'react';
 import Home from './components/Home'
 import Navbar from './components/Navbar'
-import About from './components/About';
+// import About from './components/About';
+const About = lazy(() => import("./components/About"));
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Alert from './components/Alert';
@@ -18,7 +19,10 @@ const App = () => {
         <div className="container">
           <Routes>
             <Route exact path="/" element={<Home />} />
-            <Route exact path="/about" element={<About />} />
+            <Route exact path="/about" element={<Suspense fallback={<>Loading...</>}>
+              <About />
+            </Suspense>} />
+            {/* <Route exact path="/about" element={<About />} /> */}
             <Route exact path="/login" element={<Login />} />
             <Route exact path="/register" element={<Signup />} />
           </Routes>

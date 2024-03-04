@@ -1,13 +1,13 @@
 const middlewareObj = {};
-const Todo = require('../src/models/Todo')
+const Project = require('../src/models/Project')
 
 
-middlewareObj.checkTodoOwnership = async(req, res, next) => {
+middlewareObj.checkProjectOwnership = async(req, res, next) => {
 	if(req.isAuthenticated()){
         try {
-		    const todo = await Todo.findById(req.params.id);
-            // console.log(todo);
-            if (todo.author.id.equals(req.user._id)) {
+		    const project = await Project.findById(req.params.id);
+            // console.log(project);
+            if (project.author.id.equals(req.user._id)) {
                 return next();
             } else {
                 return res.status(401).send("You need to be logged in to do that!");
